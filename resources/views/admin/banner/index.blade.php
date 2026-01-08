@@ -6,7 +6,7 @@
     <!-- HEADER -->
     <div class="flex justify-between items-center mb-8">
         <h1 class="text-xl font-semibold text-gray-700">
-            Manajemen Banner
+            Banner Beranda
         </h1>
 
         <a href="{{ route('admin.banner.create') }}"
