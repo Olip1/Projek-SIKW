@@ -17,7 +17,7 @@ class AdminBannerController extends Controller
 
     public function create()
     {
-        return view('admin.banners.create');
+        return view('admin.banner.create');
     }
 
     public function store(Request $request)
@@ -42,7 +42,7 @@ class AdminBannerController extends Controller
 
     public function edit(Banner $banner)
     {
-        return view('admin.banners.edit', compact('banner'));
+        return view('admin.banner.edit', compact('banner'));
     }
 
     public function update(Request $request, Banner $banner)
@@ -58,7 +58,7 @@ class AdminBannerController extends Controller
 
         $banner->update($data);
 
-        return redirect()->route('admin.banners.index')
+        return redirect()->route('admin.banner.index')
             ->with('success', 'Banner berhasil diperbarui');
     }
 
