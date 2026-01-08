@@ -12,6 +12,7 @@ use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\AdminBannerController;
+use App\Http\Controllers\AdminOrderController;
 
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -71,7 +72,15 @@ Route::middleware(['auth', 'is_admin'])
     Route::resource('banners', AdminBannerController::class)
       ->names('admin.banner');
 
-    });
+    // MANAJEMEN PESANAN (ORDER)
+    Route::resource('orders', AdminOrderController::class)
+      ->names('admin.orders');
+
+    // Update status pesanan
+    Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])
+      ->name('admin.orders.status');
+
+  });
 
 
 
