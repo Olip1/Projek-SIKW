@@ -1,77 +1,95 @@
 @extends('layouts.admin')
 
+@section('title', 'Manajemen Banner')
+
 @section('content')
-<div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-xl font-semibold text-gray-700">
+            Manajemen Banner
+        </h1>
 
-    <h1 class="text-2xl font-bold mb-6">Tambah Banner</h1>
+        <a href="{{ route('admin.banner.create') }}"
+            class="bg-pink-400 hover:bg-pink-500 text-white px-4 py-2 rounded-lg text-sm">
+            + Tambah Banner
+        </a>
+    </div>
 
-    {{-- Error Validation --}}
-    @if ($errors->any())
-        <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
-            <ul class="list-disc pl-5">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
+    <!-- TABLE CARD -->
+    <div class="bg-white rounded-xl shadow p-6">
+        <p class="text-pink-400 text-sm mb-4">
+            Daftar Banner Website
+        </p>
+
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left border-collapse">
+                <thead>
+                    <tr class="text-gray-600 border-b">
+                        <th class="py-3 px-2">No</th>
+                        <th class="py-3 px-2">Judul Banner</th>
+                        <th class="py-3 px-2">Gambar</th>
+                        <th class="py-3 px-2">Status</th>
+                        <th class="py-3 px-2 text-center">Aksi</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @forelse ($banners as $index => $banner)
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="py-3 px-2">
+                                {{ $index + 1 }}
+                            </td>
+
+                            <td class="py-3 px-2">
+                                {{ $banner->title }}
+                            </td>
+
+                            <td class="py-3 px-2">
+                                <img src="{{ asset('storage/' . $banner->image) }}"
+                                    class="h-16 rounded-lg object-cover"
+                                    alt="Banner">
+                            </td>
+
+                            <td class="py-3 px-2">
+                                @if ($banner->status == 'aktif')
+                                    <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">
+                                        Aktif
+                                    </span>
+                                @else
+                                    <span class="bg-red-100 text-red-600 px-3 py-1 rounded-full text-xs">
+                                        Nonaktif
+                                    </span>
+                                @endif
+                            </td>
+
+                            <td class="py-3 px-2 text-center space-x-2">
+                                <a href="{{ route('admin.banner.edit', $banner->id) }}"
+                                    class="bg-yellow-400 hover:bg-yellow-500 text-white px-3 py-1 rounded text-xs">
+                                    Edit
+                                </a>
+
+                                <form action="{{ route('admin.banner.destroy', $banner->id) }}"
+                                    method="POST"
+                                    class="inline-block"
+                                    onsubmit="return confirm('Yakin ingin menghapus banner ini?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        class="bg-red-400 hover:bg-red-500 text-white px-3 py-1 rounded text-xs">
+                                        Hapus
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="5" class="py-6 text-center text-gray-500">
+                                Belum ada banner
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
         </div>
-    @endif
-
-    <form action="{{ route('admin.banners.store') }}" 
-          method="POST" 
-          enctype="multipart/form-data">
-
-        @csrf
-
-        {{-- Judul Banner --}}
-        <div class="mb-4">
-            <label class="block font-semibold mb-1">
-                Judul Banner
-            </label>
-            <input type="text"
-                   name="title"
-                   value="{{ old('title') }}"
-                   class="w-full border rounded px-3 py-2 focus:outline-none focus:ring"
-                   placeholder="Masukkan judul banner">
-        </div>
-
-        {{-- Upload Gambar --}}
-        <div class="mb-4">
-            <label class="block font-semibold mb-1">
-                Gambar Banner
-            </label>
-            <input type="file"
-                   name="image"
-                   class="w-full border rounded px-3 py-2">
-            <small class="text-gray-500">
-                Format: JPG, PNG, maksimal 2MB
-            </small>
-        </div>
-
-        {{-- Status --}}
-        <div class="mb-6">
-            <label class="block font-semibold mb-1">
-                Status Banner
-            </label>
-            <select name="is_active"
-                    class="w-full border rounded px-3 py-2">
-                <option value="1">Aktif</option>
-                <option value="0">Nonaktif</option>
-            </select>
-        </div>
-
-        {{-- Tombol --}}
-        <div class="flex justify-end gap-2">
-            <a href="{{ route('admin.banners.index') }}"
-               class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">
-                Batal
-            </a>
-
-            <button type="submit"
-                    class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">
-                Simpan Banner
-            </button>
-        </div>
-
-    </form>
-</div>
+    </div>
 @endsection
