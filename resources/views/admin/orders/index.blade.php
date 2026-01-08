@@ -12,7 +12,7 @@
         </h1>
     </div>
 
-    <!-- Alert Success -->
+    <!-- Alert -->
     @if(session('success'))
         <div class="mb-4 p-4 bg-green-100 text-green-700 rounded-lg">
             {{ session('success') }}
@@ -24,35 +24,41 @@
         <table class="min-w-full border border-gray-200 rounded-lg">
             <thead class="bg-gray-100">
                 <tr>
-                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">#</th>
-                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">Kode Pesanan</th>
-                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">Pelanggan</th>
-                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">Total</th>
-                    <th class="px-4 py-3 text-left text-sm font-medium text-gray-600">Status</th>
-                    <th class="px-4 py-3 text-center text-sm font-medium text-gray-600">Aksi</th>
+                    <th class="px-4 py-3 text-sm text-gray-600 text-center">#</th>
+                    <th class="px-4 py-3 text-sm text-gray-600">Kode Pesanan</th>
+                    <th class="px-4 py-3 text-sm text-gray-600">Pelanggan</th>
+                    <th class="px-4 py-3 text-sm text-gray-600">Total</th>
+                    <th class="px-4 py-3 text-sm text-gray-600 text-center">Status</th>
+                    <th class="px-4 py-3 text-sm text-gray-600 text-center">Aksi</th>
                 </tr>
             </thead>
 
             <tbody class="divide-y divide-gray-200">
                 @forelse($orders as $order)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3 text-sm text-gray-700">
+
+                        <!-- No -->
+                        <td class="px-4 py-3 text-center text-sm text-gray-700">
                             {{ $loop->iteration }}
                         </td>
 
+                        <!-- Kode -->
                         <td class="px-4 py-3 text-sm font-semibold text-gray-800">
                             #{{ $order->order_code ?? $order->id }}
                         </td>
 
+                        <!-- Pelanggan -->
                         <td class="px-4 py-3 text-sm text-gray-700">
                             {{ $order->user->name ?? 'Guest' }}
                         </td>
 
+                        <!-- Total -->
                         <td class="px-4 py-3 text-sm text-gray-700">
                             Rp {{ number_format($order->total, 0, ',', '.') }}
                         </td>
 
-                        <td class="px-4 py-3">
+                        <!-- Status -->
+                        <td class="px-4 py-3 text-center">
                             @php
                                 $statusColor = match($order->status) {
                                     'pending' => 'bg-yellow-100 text-yellow-700',
@@ -69,19 +75,30 @@
                             </span>
                         </td>
 
+                        <!-- Aksi -->
                         <td class="px-4 py-3 text-center">
-                            <div class="flex justify-center gap-2">
+                            <div class="flex flex-col gap-2 items-center">
+
                                 <a href="{{ route('admin.orders.show', $order->id) }}"
-                                    class="px-3 py-1 text-sm bg-indigo-500 text-white rounded-lg hover:bg-indigo-600">
+                                   class="w-full px-3 py-1 text-sm bg-indigo-500 text-white rounded-lg hover:bg-indigo-600">
                                     Detail
                                 </a>
 
-                                <a href="{{ route('admin.orders.edit', $order->id) }}"
-                                    class="px-3 py-1 text-sm bg-yellow-500 text-white rounded-lg hover:bg-yellow-600">
-                                    Edit
-                                </a>
+                                <form action="{{ route('admin.orders.updateStatus', $order->id) }}" method="POST" class="w-full">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <select name="status"
+                                            onchange="this.form.submit()"
+                                            class="w-full text-sm rounded-lg border-gray-300 focus:ring-pink-400 focus:border-pink-400">
+                                        <option value="pending" @selected($order->status == 'pending')>Pending</option>
+                                        <option value="paid" @selected($order->status == 'paid')>Paid</option>
+                                    </select>
+                                </form>
+
                             </div>
                         </td>
+
                     </tr>
                 @empty
                     <tr>

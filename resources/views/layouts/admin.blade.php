@@ -6,6 +6,8 @@
     <title>@yield('title', 'Dashboard Admin')</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -16,47 +18,107 @@
 <body class="bg-sky-200 min-h-screen flex">
 
     <!-- SIDEBAR -->
-    <aside class="w-64 bg-pink-300 min-h-screen p-6 text-white">
-        <div class="text-3xl font-semibold mb-10">
-            W
+   <aside class="w-64 bg-pink-300 min-h-screen p-6 text-white">
+
+    <!-- LOGO -->
+    <div class="text-3xl font-bold mb-10 flex items-center gap-2">
+        <i class="fa-solid fa-layer-group"></i>
+        <span>W</span>
+    </div>
+
+    <nav class="space-y-8 text-sm">
+
+        <!-- DASHBOARD -->
+        <div>
+            <p class="font-semibold mb-3 text-pink-100 uppercase tracking-wide text-xs">
+                Dashboard
+            </p>
+            <a href="{{ route('admin.dashboard') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-pink-400 transition">
+                <i class="fa-solid fa-house"></i>
+                <span>Menu Utama</span>
+            </a>
         </div>
 
-        <nav class="space-y-4 text-sm">
-            <div>
-                <p class="font-semibold mb-2">Dashboard</p>
-                <a href="{{ route('admin.dashboard') }}" class="block ml-2 hover:text-pink-100">Menu Utama</a>
-            </div>
+        <!-- MANAJEMEN KONTEN -->
+        <div>
+            <p class="font-semibold mb-3 text-pink-100 uppercase tracking-wide text-xs">
+                Manajemen Konten
+            </p>
 
-            <div>
-                <p class="font-semibold mb-2">Manajemen Konten</p>
-                <a href="#" class="block ml-2 hover:text-pink-100">Video</a>
-                <a href="#" class="block ml-2 hover:text-pink-100">Infografis</a>
-                <a href="#" class="block ml-2 hover:text-pink-100">Artikel</a>
-            </div>
-            <div>
-                <p class="font-semibold mb-2">Manajemen Akun User</p>
-                <a href="{{ route('admin.user') }}" class="block ml-2 hover:text-pink-100">Daftar User</a>
+            <a href="{{ route('admin.edukasi.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-pink-400 transition">
+                <i class="fa-solid fa-video"></i>
+                <span>Video Edukasi</span>
+            </a>
 
-            </div>
+            <a href="{{ route('admin.artikel.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-pink-400 transition">
+                <i class="fa-regular fa-newspaper"></i>
+                <span>Artikel</span>
+            </a>
+        </div>
 
-            <div>
-                <p class="font-semibold mb-2">Manajemen Produk</p>
-                <a href="{{ route('admin.products.index') }}" class="block ml-2 hover:text-pink-100">
-                    Kelola Produk
-                </a>
-                <a href="{{ route('admin.banner.index') }}" class="block ml-2 hover:text-pink-100">Banner Beranda</a>
-            </div>
+        <!-- MANAJEMEN USER -->
+        <div>
+            <p class="font-semibold mb-3 text-pink-100 uppercase tracking-wide text-xs">
+                Manajemen User
+            </p>
 
-            <div>
-                <p class="font-semibold mb-2">Manajemen Pesanan</p>
-                <a href="{{route( 'admin.orders.index' )}}" class="block ml-2 hover:text-pink-100">Pesanan</a>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit">Logout</button>
-                </form>
-            </div>
-        </nav>
-    </aside>
+            <a href="{{ route('admin.user') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-pink-400 transition">
+                <i class="fa-solid fa-users"></i>
+                <span>Daftar User</span>
+            </a>
+        </div>
+
+        <!-- MANAJEMEN PRODUK -->
+        <div>
+            <p class="font-semibold mb-3 text-pink-100 uppercase tracking-wide text-xs">
+                Manajemen Produk
+            </p>
+
+            <a href="{{ route('admin.products.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-pink-400 transition">
+                <i class="fa-solid fa-box"></i>
+                <span>Produk</span>
+            </a>
+
+            <a href="{{ route('admin.banner.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-pink-400 transition">
+                <i class="fa-regular fa-images"></i>
+                <span>Banner Beranda</span>
+            </a>
+        </div>
+
+        <!-- MANAJEMEN PESANAN -->
+        <div>
+            <p class="font-semibold mb-3 text-pink-100 uppercase tracking-wide text-xs">
+                Pesanan
+            </p>
+
+            <a href="{{ route('admin.orders.index') }}"
+               class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-pink-400 transition">
+                <i class="fa-solid fa-receipt"></i>
+                <span>Daftar Pesanan</span>
+            </a>
+        </div>
+
+        <!-- LOGOUT -->
+        <div class="pt-6 border-t border-pink-400">
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit"
+                        class="flex items-center gap-3 w-full px-3 py-2 rounded-lg hover:bg-red-400 transition text-left">
+                    <i class="fa-solid fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </button>
+            </form>
+        </div>
+
+    </nav>
+</aside>
+
 
     <!-- MAIN CONTENT -->
     <main class="flex-1 p-8">

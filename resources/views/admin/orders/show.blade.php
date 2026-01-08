@@ -12,7 +12,7 @@
         </h1>
 
         <a href="{{ route('admin.orders.index') }}"
-            class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
+           class="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600">
             ← Kembali
         </a>
     </div>
@@ -24,16 +24,29 @@
         </div>
     @endif
 
-    <!-- Order Info -->
+    <!-- Info Section -->
     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
 
-        <div class="border rounded-lg p-4">
-            <h2 class="text-lg font-semibold mb-4">Informasi Pesanan</h2>
+        <!-- Order Info -->
+        <div class="border rounded-lg p-5">
+            <h2 class="text-lg font-semibold mb-4 text-gray-800">
+                Informasi Pesanan
+            </h2>
 
             <div class="space-y-2 text-sm text-gray-700">
-                <p><strong>Kode Pesanan:</strong> #{{ $order->order_code ?? $order->id }}</p>
-                <p><strong>Tanggal:</strong> {{ $order->created_at->format('d M Y H:i') }}</p>
-                <p><strong>Status:</strong>
+                <p>
+                    <span class="font-medium">Kode Pesanan:</span>
+                    #{{ $order->order_code ?? $order->id }}
+                </p>
+
+                <p>
+                    <span class="font-medium">Tanggal:</span>
+                    {{ $order->created_at->format('d M Y H:i') }}
+                </p>
+
+                <p class="flex items-center gap-2">
+                    <span class="font-medium">Status:</span>
+
                     @php
                         $statusColor = match($order->status) {
                             'pending' => 'bg-yellow-100 text-yellow-700',
@@ -53,46 +66,69 @@
         </div>
 
         <!-- Customer Info -->
-        <div class="border rounded-lg p-4">
-            <h2 class="text-lg font-semibold mb-4">Data Pelanggan</h2>
+        <div class="border rounded-lg p-5">
+            <h2 class="text-lg font-semibold mb-4 text-gray-800">
+                Data Pelanggan
+            </h2>
 
             <div class="space-y-2 text-sm text-gray-700">
-                <p><strong>Nama:</strong> {{ $order->user->name ?? 'Guest' }}</p>
-                <p><strong>Email:</strong> {{ $order->user->email ?? '-' }}</p>
-                <p><strong>No. Telepon:</strong> {{ $order->phone ?? '-' }}</p>
-                <p><strong>Alamat:</strong> {{ $order->address ?? '-' }}</p>
+                <p>
+                    <span class="font-medium">Nama:</span>
+                    {{ $order->user->name ?? 'Guest' }}
+                </p>
+
+                <p>
+                    <span class="font-medium">Email:</span>
+                    {{ $order->user->email ?? '-' }}
+                </p>
+
+                <p>
+                    <span class="font-medium">Telepon:</span>
+                    {{ $order->phone ?? '-' }}
+                </p>
+
+                <p>
+                    <span class="font-medium">Alamat:</span>
+                    {{ $order->address ?? '-' }}
+                </p>
             </div>
         </div>
 
     </div>
 
-    <!-- Order Items -->
+    <!-- Product List -->
     <div class="mb-8">
-        <h2 class="text-lg font-semibold mb-4">Daftar Produk</h2>
+        <h2 class="text-lg font-semibold mb-4 text-gray-800">
+            Daftar Produk
+        </h2>
 
         <div class="overflow-x-auto">
             <table class="min-w-full border border-gray-200 rounded-lg">
                 <thead class="bg-gray-100">
                     <tr>
-                        <th class="px-4 py-2 text-left text-sm font-medium">Produk</th>
-                        <th class="px-4 py-2 text-center text-sm font-medium">Harga</th>
-                        <th class="px-4 py-2 text-center text-sm font-medium">Qty</th>
-                        <th class="px-4 py-2 text-center text-sm font-medium">Subtotal</th>
+                        <th class="px-4 py-3 text-sm text-gray-600 text-left">Produk</th>
+                        <th class="px-4 py-3 text-sm text-gray-600 text-center">Harga</th>
+                        <th class="px-4 py-3 text-sm text-gray-600 text-center">Qty</th>
+                        <th class="px-4 py-3 text-sm text-gray-600 text-center">Subtotal</th>
                     </tr>
                 </thead>
+
                 <tbody class="divide-y divide-gray-200">
                     @foreach($order->items as $item)
                         <tr>
-                            <td class="px-4 py-2 text-sm">
+                            <td class="px-4 py-3 text-sm text-gray-700">
                                 {{ $item->product->name ?? '-' }}
                             </td>
-                            <td class="px-4 py-2 text-sm text-center">
+
+                            <td class="px-4 py-3 text-sm text-center text-gray-700">
                                 Rp {{ number_format($item->price, 0, ',', '.') }}
                             </td>
-                            <td class="px-4 py-2 text-sm text-center">
+
+                            <td class="px-4 py-3 text-sm text-center text-gray-700">
                                 {{ $item->qty }}
                             </td>
-                            <td class="px-4 py-2 text-sm text-center">
+
+                            <td class="px-4 py-3 text-sm text-center font-medium text-gray-800">
                                 Rp {{ number_format($item->price * $item->qty, 0, ',', '.') }}
                             </td>
                         </tr>
@@ -102,7 +138,7 @@
         </div>
     </div>
 
-    <!-- Total & Status Update -->
+    <!-- Footer Action -->
     <div class="flex flex-col md:flex-row justify-between items-center gap-4">
 
         <div class="text-lg font-semibold text-gray-800">
@@ -112,19 +148,17 @@
             </span>
         </div>
 
-        <!-- Update Status -->
-        <form action="{{ route('admin.orders.status', $order->id) }}" method="POST"
+        <form action="{{ route('admin.orders.updateStatus', $order->id) }}"
+              method="POST"
               class="flex items-center gap-2">
             @csrf
-            @method('PATCH')
+            @method('PUT')
 
             <select name="status"
-                class="border rounded-lg px-4 py-2 text-sm focus:ring focus:ring-indigo-200">
+                class="rounded-lg border-gray-300 text-sm focus:ring-pink-400 focus:border-pink-400">
                 <option value="pending" @selected($order->status == 'pending')>Pending</option>
-                <option value="diproses" @selected($order->status == 'diproses')>Diproses</option>
-                <option value="dikirim" @selected($order->status == 'dikirim')>Dikirim</option>
-                <option value="selesai" @selected($order->status == 'selesai')>Selesai</option>
-                <option value="dibatalkan" @selected($order->status == 'dibatalkan')>Dibatalkan</option>
+                <option value="paid" @selected($order->status == 'paid')>Paid</option>
+               
             </select>
 
             <button type="submit"

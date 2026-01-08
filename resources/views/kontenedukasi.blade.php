@@ -1,27 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tentang Kami</title>
-
-    <!-- Google Font untuk gaya tulisan -->
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-
-    <!-- Tailwind CDN -->
+    <title>Konten Edukasi</title>
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <style>
-        .font-cantik {
-            font-family: 'Pacifico', cursive;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-pink-300 min-h-screen">
+<body class="bg-[#b2dbff] min-h-screen">
 
     <!-- NAVBAR -->
     <nav class="w-full bg-blue-300 px-4 py-3 flex justify-between items-center shadow-md">
@@ -66,23 +53,36 @@
         </a>
 
     </div>
-
     <!-- CONTENT -->
-    <div class="flex justify-center items-start px-4 py-12">
+    <div class="max-w-6xl mx-auto px-6 mt-8">
 
-        <div class="bg-blue-300 w-full max-w-5xl p-10 rounded-3xl shadow-xl">
+        <!-- GRID VIDEO -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
 
-            <p class="text-center text-white text-2xl md:text-3xl font-cantik leading-relaxed drop-shadow-lg">
-                Selamat datang di Sistem Informasi Kesehatan Wanita — ruang digital yang hadir untuk menemani setiap
-                perempuan dalam perjalanan menjaga dan memahami kesehatannya.
-            </p>
+            @foreach ($videos as $video)
+                <div class="bg-blue-200 rounded-2xl h-56 flex items-center justify-center shadow relative">
 
-            <p class="text-center text-white text-2xl md:text-3xl font-cantik leading-relaxed drop-shadow-lg mt-10">
-                Kami percaya bahwa setiap wanita berhak merasa sehat, bahagia, dan berdaya.
-                Melalui blog ini, kami berusaha menghadirkan informasi kesehatan yang terpercaya,
-                mudah dipahami, dan relevan dengan kehidupan sehari-hari.
-            </p>
+                    <a href="{{ $video->youtube_url }}" target="_blank"
+                        class="w-full h-full flex items-center justify-center">
 
+                        <img src="{{ asset('storage/' . $video->thumbnail) }}"
+                            class="absolute inset-0 w-full h-full object-cover rounded-2xl opacity-80">
+
+                        <div class="relative z-10 bg-white/70 p-4 rounded-full">
+                            <i class="fa-solid fa-play text-xl text-gray-700"></i>
+                        </div>
+                    </a>
+
+                </div>
+            @endforeach
+
+        </div>
+
+        <!-- GARIS DESKRIPSI -->
+        <div class="mt-10 space-y-3">
+            @foreach ($videos as $video)
+                <div class="h-3 bg-pink-300 rounded-full"></div>
+            @endforeach
         </div>
 
     </div>

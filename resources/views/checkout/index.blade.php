@@ -33,7 +33,7 @@
                 </tr>
             </thead>
             <tbody>
-                @forelse($items as $item)
+                @forelse($keranjang as $item)
                     <tr class="border-b">
                         <td class="p-2">{{ $item->product->name }}</td>
                         <td class="text-center p-2">{{ $item->qty }}</td>
