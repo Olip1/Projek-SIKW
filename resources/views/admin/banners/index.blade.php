@@ -11,7 +11,7 @@
 
         <a href="{{ route('admin.banner.create') }}"
             class="bg-pink-400 hover:bg-pink-500 text-white px-4 py-2 rounded-lg text-sm">
-            + Tambah Banner
+            Tambah Banner
         </a>
     </div>
 
