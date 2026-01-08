@@ -1,0 +1,64 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\KeranjangController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ContactController;
+
+
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+
+// HOME
+Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// DETAIL PRODUK
+Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.detail');
+
+// KERANJANG
+Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang');
+Route::post('/keranjang/tambah/{id}', [KeranjangController::class, 'tambah'])->name('keranjang.tambah');
+Route::post('/keranjang/kurang/{id}', [KeranjangController::class, 'kurang'])->name('keranjang.kurang');
+Route::put('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
+Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
+
+// halaman checkout
+Route::get('/checkout', [CheckoutController::class, 'index']) ->middleware('auth')->name('checkout');
+
+// proses checkout
+Route::post('/checkout', [CheckoutController::class, 'store'])->middleware('auth')->name('checkout.store');
+
+// halaman kontak
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+
+
+Route::get('/login', [AuthController::class, 'login'])->name('login');
+Route::post('/login', [AuthController::class, 'loginPost']);
+
+Route::get('/register', [AuthController::class, 'register'])->name('register');
+Route::post('/register', [AuthController::class, 'registerPost']);
+
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider and all of them will
+| be assigned to the "web" middleware group. Make something great!
+|
+*/
+
+
+Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth')->name('profile');
+Route::post('/profile/update', [ProfileController::class, 'update'])->middleware('auth')->name('profile.update');
+
+
+
+
