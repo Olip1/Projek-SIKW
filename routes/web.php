@@ -71,7 +71,7 @@ Route::middleware(['auth', 'is_admin'])
     Route::resource('banners', AdminBannerController::class)
     ->names('admin.banners');
 
-    Route::get('/banner', [AdminUserController::class, 'index'])
+    Route::get('/banner', [AdminUserController::class, 'banner'])
       ->name('admin.banners');
 
   });
