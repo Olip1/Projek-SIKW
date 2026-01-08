@@ -12,7 +12,7 @@ class AdminBannerController extends Controller
     public function index()
     {
         $banners = Banner::latest()->get();
-        return view('admin.banners.index', compact('banners'));
+        return view('admin.banner.index', compact('banners'));
     }
 
     public function create()

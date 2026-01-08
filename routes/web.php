@@ -30,7 +30,7 @@ Route::put('/keranjang/update/{id}', [KeranjangController::class, 'update'])->na
 Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
 
 // halaman checkout
-Route::get('/checkout', [CheckoutController::class, 'index']) ->middleware('auth')->name('checkout');
+Route::get('/checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout');
 
 // proses checkout
 Route::post('/checkout', [CheckoutController::class, 'store'])->middleware('auth')->name('checkout.store');
@@ -69,9 +69,11 @@ Route::middleware(['auth', 'is_admin'])
       ->names('admin.products');
 
     Route::resource('banners', AdminBannerController::class)
-    ->names('admin.banners');
+      ->names('admin.banners');
 
-    Route::get('/banner', [AdminBannerController::class, 'banners'])
-      ->name('admin.banners.index');
+    Route::middleware(['auth', 'isAdmin'])->group(function () {
+      Route::resource('admin/banner', AdminBannerController::class);
+    });
+
 
   });
