@@ -30,9 +30,6 @@ Route::post('/keranjang/kurang/{id}', [KeranjangController::class, 'kurang'])->n
 Route::put('/keranjang/update/{id}', [KeranjangController::class, 'update'])->name('keranjang.update');
 Route::delete('/keranjang/hapus/{id}', [KeranjangController::class, 'hapus'])->name('keranjang.hapus');
 
-// halaman checkout
-Route::get('/checkout', [CheckoutController::class, 'index'])->middleware('auth')->name('checkout');
-
 Route::middleware('auth')->group(function () {
     Route::get('/keranjang', [KeranjangController::class, 'index'])->name('keranjang.index');
     Route::get('/checkout', [CheckoutController::class, 'index'])->name('checkout.index');
