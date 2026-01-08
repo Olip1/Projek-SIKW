@@ -15,7 +15,11 @@ class KeranjangController extends Controller
         ->where('id', Auth::id())
         ->get();
 
-    return view('keranjang.index', compact('keranjang'));
+    $total = $keranjang->sum(function ($item) {
+        return $item->product->harga * $item->qty;
+    });
+
+    return view('keranjang.index', compact('keranjang', 'total'));
 }
 
 

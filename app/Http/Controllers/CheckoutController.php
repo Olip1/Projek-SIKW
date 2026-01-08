@@ -19,7 +19,7 @@ class CheckoutController extends Controller
 
         // Jika keranjang kosong
         if ($keranjang->isEmpty()) {
-            return redirect()->route('keranjang')
+            return redirect()->route('keranjang.index')
                 ->with('error', 'Keranjang masih kosong');
         }
         // HITUNG TOTAL
