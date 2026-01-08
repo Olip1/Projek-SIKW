@@ -13,7 +13,7 @@
     
 <nav class="w-full bg-blue-300 px-6 py-4 flex justify-between items-center shadow-md">
     <a href="{{ route('home') }}" class="text-3xl">⬅️</a>
-    <a href="{{ route('keranjang') }}" class="text-xl hover:opacity-70">🛒</a>
+    <a href="{{ route('keranjang.index') }}" class="text-xl hover:opacity-70">🛒</a>
 </nav>
         
     
@@ -43,7 +43,7 @@
                 </div>
 
                 <!-- ADD TO CART BUTTON -->
-                    <form action="{{ route('keranjang.index', $product->id) }}" method="GET">
+                    <form action="{{ route('keranjang', $product->id) }}" method="GET">
                         @csrf
                         <button type="submit"
                             class="bg-[#ff9fb8] text-white px-6 py-2 rounded-full mt-4 shadow hover:bg-pink-500 transition">
