@@ -51,7 +51,7 @@
                             </td>
 
                             <td class="py-3 px-2">
-                                @if ($banner->status == 'aktif')
+                                    @if ($banner->is_active)
                                     <span class="bg-green-100 text-green-600 px-3 py-1 rounded-full text-xs">
                                         Aktif
                                     </span>
@@ -60,6 +60,7 @@
                                         Nonaktif
                                     </span>
                                 @endif
+
                             </td>
 
                             <td class="py-3 px-2 text-center space-x-2">

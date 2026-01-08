@@ -23,20 +23,21 @@ class AdminBannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-        'title' => 'required|string|max:255',
-        'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
-        'status' => 'required|in:aktif,nonaktif',
-    ]);
+            'title' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpg,jpeg,png|max:2048',
+            'status' => 'required|in:aktif,nonaktif',
+        ]);
 
         $image = $request->file('image')->store('banners', 'public');
 
         Banner::create([
             'title' => $request->title,
             'image' => $image,
-            'is_active' => $request->status, 
+            'is_active' => $request->status === 'aktif' ? 1 : 0,
         ]);
 
-        return redirect()->route('admin.banner.index')
+        return redirect()
+            ->route('admin.banner.index')
             ->with('success', 'Banner berhasil ditambahkan');
     }
 
