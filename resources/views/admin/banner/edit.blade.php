@@ -16,7 +16,7 @@
         </div>
     @endif
 
-    <form action="{{ route('admin.banners.update', $banner->id) }}"
+    <form action="{{ route('admin.banner.update', $banner->id) }}"
           method="POST"
           enctype="multipart/form-data">
 
@@ -74,7 +74,7 @@
 
         {{-- Tombol --}}
         <div class="flex justify-end gap-2">
-            <a href="{{ route('admin.banners.index') }}"
+            <a href="{{ route('admin.banner.index') }}"
                class="px-4 py-2 rounded bg-gray-300 hover:bg-gray-400">
                 Batal
             </a>
