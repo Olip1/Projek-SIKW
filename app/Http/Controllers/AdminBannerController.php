@@ -1,8 +1,11 @@
 <?php
-namespace App\Http\Controllers\Admin;
+
+namespace App\Http\Controllers;
+
+use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
+
 
 class AdminBannerController extends Controller
 {
@@ -29,7 +32,7 @@ class AdminBannerController extends Controller
         Banner::create([
             'title' => $request->title,
             'image' => $image,
-            'is_active' => $request->is_active ?? 1
+            'is_active' => $request->is_active 
         ]);
 
         return redirect()->route('admin.banners.index')

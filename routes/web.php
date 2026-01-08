@@ -11,6 +11,7 @@ use App\Http\Controllers\AdminProductController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\AdminBannerController;
 
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
@@ -66,4 +67,8 @@ Route::middleware(['auth', 'is_admin'])
 
     Route::resource('products', AdminProductController::class)
       ->names('admin.products');
+
+    Route::resource('banners', AdminBannerController::class)
+    ->names('admin.banners');
+
   });
