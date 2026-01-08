@@ -49,7 +49,7 @@
 
             <div>
                 <p class="font-semibold mb-2">Manajemen Pesanan</p>
-                <a href="{{route( 'admin.orders' )}}" class="block ml-2 hover:text-pink-100">Pesanan</a>
+                <a href="{{route( 'admin.orders.index' )}}" class="block ml-2 hover:text-pink-100">Pesanan</a>
                 <form action="{{ route('logout') }}" method="POST">
                     @csrf
                     <button type="submit">Logout</button>
