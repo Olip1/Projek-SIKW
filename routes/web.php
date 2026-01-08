@@ -69,7 +69,7 @@ Route::middleware(['auth', 'is_admin'])
       ->names('admin.products');
 
     Route::resource('banners', AdminBannerController::class)
-      ->names('admin.banners');
+      ->names('admin.banner');
 
     });
 
