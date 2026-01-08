@@ -25,7 +25,6 @@
             <div>
                 <p class="font-semibold mb-2">Dashboard</p>
                 <a href="{{ route('admin.dashboard') }}" class="block ml-2 hover:text-pink-100">Menu Utama</a>
-                <a href="{{ route('admin.banner.index') }}" class="block ml-2 hover:text-pink-100">Banner Beranda</a>
             </div>
 
             <div>
@@ -45,8 +44,7 @@
                 <a href="{{ route('admin.products.index') }}" class="block ml-2 hover:text-pink-100">
                     Kelola Produk
                 </a>
-
-                <a href="#" class="block ml-2 hover:text-pink-100">Tambah Produk</a>
+                <a href="{{ route('admin.banner.index') }}" class="block ml-2 hover:text-pink-100">Banner Beranda</a>
             </div>
 
             <div>
