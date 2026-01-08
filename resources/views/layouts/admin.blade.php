@@ -25,7 +25,7 @@
             <div>
                 <p class="font-semibold mb-2">Dashboard</p>
                 <a href="{{ route('admin.dashboard') }}" class="block ml-2 hover:text-pink-100">Menu Utama</a>
-                <a href="{{ route('admin/banner') }}" class="block ml-2 hover:text-pink-100">Banner Beranda</a>
+                <a href="{{ route('admin.banner') }}" class="block ml-2 hover:text-pink-100">Banner Beranda</a>
             </div>
 
             <div>
