@@ -18,12 +18,31 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
+
+            $user = Auth::user();
+
+            if (!$user->is_active) {
+                Auth::logout();
+                return back()->withErrors([
+                    'email' => 'Akun Anda dinonaktifkan'
+                ]);
+            }
+
             $request->session()->regenerate();
-            return redirect('/dashboard');
+
+            if ($user->role === 'admin') {
+                return redirect('admin/dashboard');
+            }
+
+            return redirect('/');
         }
 
-        return back()->withErrors(['email' => 'Email atau password salah.']);
+        return back()->withErrors([
+            'email' => 'Email atau password salah'
+        ]);
     }
+
+
 
     public function register()
     {
@@ -36,14 +55,21 @@ class AuthController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'role' => 'pembeli',
+            'is_active' => true,
         ]);
 
         return redirect()->route('login');
     }
 
+
     public function logout(Request $request)
     {
         Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('login');
     }
 }

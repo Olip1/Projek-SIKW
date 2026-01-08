@@ -7,6 +7,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\KeranjangController;
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AdminProductController;
+use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContactController;
 
@@ -44,21 +46,24 @@ Route::post('/register', [AuthController::class, 'registerPost']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-
-
 Route::get('/profile', [ProfileController::class, 'index'])->middleware('auth')->name('profile');
 Route::post('/profile/update', [ProfileController::class, 'update'])->middleware('auth')->name('profile.update');
 
 
+// Route Khusus Admin
+Route::middleware(['auth', 'is_admin'])
+  ->prefix('admin')
+  ->group(function () {
 
+    Route::get('/dashboard', [AdminUserController::class, 'index'])
+      ->name('admin.dashboard');
 
+    Route::get('/users', [AdminUserController::class, 'show'])
+      ->name('admin.user');
+
+    Route::post('/users/{id}/disable', [AdminUserController::class, 'nonaktif'])
+      ->name('admin.user.disable');
+
+    Route::resource('products', AdminProductController::class)
+      ->names('admin.products');
+  });
